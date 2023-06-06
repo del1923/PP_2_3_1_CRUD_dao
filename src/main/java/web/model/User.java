@@ -1,8 +1,6 @@
 package web.model;
 
 import org.hibernate.validator.constraints.NotEmpty;
-import org.springframework.validation.annotation.Validated;
-
 import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;

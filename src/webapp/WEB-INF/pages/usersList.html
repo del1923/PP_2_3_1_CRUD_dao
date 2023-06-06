@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>usersList</title>
+</head>
+<body>
+<p> Тут выводятся пользователи </p>
+<div th:each = "users : ${usersList}">
+    <a th:text = "${users.getName()}"> user </a>
+</div>
+</body>
+</html>

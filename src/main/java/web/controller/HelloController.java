@@ -21,5 +21,10 @@ public class HelloController {
 		model.addAttribute("messages", messages);
 		return "index";
 	}
+	@GetMapping("/usersList")
+	public String usersList( ModelMap model ) {
+
+		return "usersList";
+	}
 	
 }
