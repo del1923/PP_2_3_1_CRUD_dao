@@ -8,9 +8,7 @@
 </head>
 <body>
 <br>
-<div class="btn-group" role="group" aria-label="Basic outlined example">
-    <button type="button" class="btn btn-outline-primary">Новый пользователь</button>
-</div>
+<a href="/users/newUser"> Новый пользователь ?</a>
 <br>
 <br>
 <table class = "table table-striped">
@@ -30,10 +28,9 @@
         <td th:text="${ user.getAge()}"/>
         <td th:text="${ user.geteMail()}"/>
         <td>
-            <div class="btn-group" role="group" aria-label="Basic outlined example">
-                <button type="button" class="btn btn-outline-primary">Редактировать</button>
-                <button type="button" class="btn btn-outline-primary">Удалить</button>
-            </div>
+            <a th:href="@{/users/editUser/{id}(id=${user.getId()})}">Редактировать</a>
+            или <a th:href="@{/users/deleteUser/{id}(id=${user.getId()})}"> Удалить </a>
+            <!--<a href="/users/editUser"> Редактировать </a> или <a href="/users/deleteUser"> Удалить </a> -->
         </td>
     </tr>
 </table>

@@ -3,7 +3,6 @@ package web.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,12 +18,6 @@ public class HelloController {
 		messages.add("При первом запуске выводим базу пользователей.");
 
 		model.addAttribute("messages", messages);
-		return "index";
+		return "hello/index";
 	}
-	@GetMapping("/usersList")
-	public String usersList( ModelMap model ) {
-
-		return "usersList";
-	}
-	
 }
