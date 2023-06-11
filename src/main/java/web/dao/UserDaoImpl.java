@@ -28,4 +28,16 @@ public class UserDaoImpl {
     public User show ( int id ) {
         return usersList.stream().filter(user -> user.getId() == id).findAny().orElse(null);
     }
+    public void update (int id, User user ) {
+        User updateUser = show( id );
+        updateUser.setName( user.getName() );
+        updateUser.setSurName( user.getSurName() );
+        updateUser.setAge( user.getAge() );
+        updateUser.seteMail( user.geteMail() );
+    }
+
+    public void delete ( int id ) {
+        usersList.removeIf( user -> user.getId() == id );
+        System.out.println("Удалён пользователь "+ id );
+    }
 }

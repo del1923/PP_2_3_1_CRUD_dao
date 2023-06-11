@@ -28,9 +28,17 @@
         <td th:text="${ user.getAge()}"/>
         <td th:text="${ user.geteMail()}"/>
         <td>
-            <a th:href="@{/users/editUser/{id}(id=${user.getId()})}">Редактировать</a>
+            <!--<a th:href="@{/users/{id}/editUser(id=${user.getId()})}">Редактировать</a>
             или <a th:href="@{/users/deleteUser/{id}(id=${user.getId()})}"> Удалить </a>
-            <!--<a href="/users/editUser"> Редактировать </a> или <a href="/users/deleteUser"> Удалить </a> -->
+            <a href="/users/editUser"> Редактировать </a> или <a href="/users/deleteUser"> Удалить </a> -->
+            <div class="btn-group" role="group" aria-label="Basic outlined example">
+                <form th:method="GET" th:action="@{/users/{id}/editUser(id=${user.getId()})}">
+                    <input type="submit" value = "Редактировать">
+                </form>
+                <form th:method="DELETE" th:action="@{/users/{id}(id=${user.getId()})}">
+                    <input type="submit" value = "Удалить">
+                </form>
+            </div>
         </td>
     </tr>
 </table>

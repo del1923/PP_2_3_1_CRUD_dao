@@ -31,22 +31,28 @@ public class UsersController {
         userDaoImpl.addUser( user );
         return "redirect:users";
     }
-    @GetMapping("/{id}")
-    public String showUser(@PathVariable ("id") int id, Model model) {
-        model.addAttribute( "user",userDaoImpl.show(id));
-        return "users/showUser";
-    }
+//    @GetMapping("/{id}")
+//    public String showUser(@PathVariable ("id") int id, Model model) {
+//        model.addAttribute( "user",userDaoImpl.show(id));
+//        System.out.println("пришли в show");
+//        return "users/showUser";
+//    }
 
-    @GetMapping("/editUser/{id}")
-    public String editUser(@PathVariable ("id") int id, Model model) {
+    @GetMapping("/{id}/editUser")
+    public String editUser( Model model, @PathVariable ("id") int id ) {
         model.addAttribute( "user",userDaoImpl.show(id));
         return "users/editUser";
     }
+    @PatchMapping("/{id}")
+    public String updateUser( @ModelAttribute( "user" ) User user, @PathVariable("id") int id ) {
+        userDaoImpl.update( id , user );
+        return "redirect:/users";
+    }
 
-    @GetMapping("/deleteUser/{id}")
-    public String deleteUser(@PathVariable ("id") int id, Model model) {
-        model.addAttribute( "user",userDaoImpl.show(id));
-        return "users/deleteUser";
+    @DeleteMapping("/{id}")
+    public String deleteUser(@PathVariable ("id") int id ) {
+        userDaoImpl.delete(id);
+        return "redirect:/users";
     }
 
 }
