@@ -8,7 +8,7 @@
 </head>
 <body>
 <br>
-<a href="/users/newUser"> Новый пользователь ?</a>
+<a class="btn btn-outline-primary" href="/users/newUser" role="button">Новый пользователь</a>
 <br>
 <br>
 <table class = "table table-striped">
@@ -28,15 +28,12 @@
         <td th:text="${ user.getAge()}"/>
         <td th:text="${ user.geteMail()}"/>
         <td>
-            <!--<a th:href="@{/users/{id}/editUser(id=${user.getId()})}">Редактировать</a>
-            или <a th:href="@{/users/deleteUser/{id}(id=${user.getId()})}"> Удалить </a>
-            <a href="/users/editUser"> Редактировать </a> или <a href="/users/deleteUser"> Удалить </a> -->
             <div class="btn-group" role="group" aria-label="Basic outlined example">
                 <form th:method="GET" th:action="@{/users/{id}/editUser(id=${user.getId()})}">
-                    <input type="submit" value = "Редактировать">
+                    <button type="submit" class="btn btn-outline-primary">Редактировать</button>
                 </form>
                 <form th:method="DELETE" th:action="@{/users/{id}(id=${user.getId()})}">
-                    <input type="submit" value = "Удалить">
+                    <button type="submit" class="btn btn-outline-primary">Удалить</button>
                 </form>
             </div>
         </td>
