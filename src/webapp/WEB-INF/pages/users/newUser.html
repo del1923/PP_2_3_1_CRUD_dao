@@ -8,18 +8,22 @@
 <form th:method="POST" th:action="@{/users}" th:object="${user}">
     <label for="name"> Имя: </label>
     <input type="text" th:field="*{name}" id="name"/>
+    <div style="color: coral" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">error</div>
     <br>
     <br>
     <label for="surName"> Фамилия: </label>
     <input type="text" th:field="*{surName}" id="surName"/>
+    <div style="color: coral" th:if="${#fields.hasErrors('surName')}" th:errors="*{surName}">error</div>
     <br>
     <br>
     <label for="age"> Возраст: </label>
     <input type="text" th:field="*{age}" id="age"/>
+    <div style="color: coral" th:if="${#fields.hasErrors('age')}" th:errors="*{age}">error</div>
     <br>
     <br>
     <label for="eMail"> Е-майл: </label>
     <input type="text" th:field="*{eMail}" id="eMail"/>
+    <div style="color: coral" th:if="${#fields.hasErrors('eMail')}" th:errors="*{eMail}">error</div>
     <br>
     <br>
 

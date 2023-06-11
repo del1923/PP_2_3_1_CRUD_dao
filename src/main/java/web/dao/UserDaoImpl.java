@@ -38,6 +38,5 @@ public class UserDaoImpl {
 
     public void delete ( int id ) {
         usersList.removeIf( user -> user.getId() == id );
-        System.out.println("Удалён пользователь "+ id );
     }
 }

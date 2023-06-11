@@ -3,9 +3,11 @@ package web.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import web.dao.UserDaoImpl;
 import web.model.User;
+import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/users")
@@ -27,16 +29,13 @@ public class UsersController {
     }
 
     @PostMapping()
-    public String addUser(@ModelAttribute("user") User user) {
+    public String addUser(@ModelAttribute("user") @Valid User user, BindingResult bindingResult ) {
+        if ( bindingResult.hasErrors() ) {
+            return "/users/newUser";
+        }
         userDaoImpl.addUser( user );
         return "redirect:users";
     }
-//    @GetMapping("/{id}")
-//    public String showUser(@PathVariable ("id") int id, Model model) {
-//        model.addAttribute( "user",userDaoImpl.show(id));
-//        System.out.println("пришли в show");
-//        return "users/showUser";
-//    }
 
     @GetMapping("/{id}/editUser")
     public String editUser( Model model, @PathVariable ("id") int id ) {
@@ -44,7 +43,10 @@ public class UsersController {
         return "users/editUser";
     }
     @PatchMapping("/{id}")
-    public String updateUser( @ModelAttribute( "user" ) User user, @PathVariable("id") int id ) {
+    public String updateUser( @ModelAttribute( "user" ) @Valid User user, BindingResult bindingResult, @PathVariable("id") int id ) {
+        if ( bindingResult.hasErrors() ) {
+            return "/users/editUser";
+        }
         userDaoImpl.update( id , user );
         return "redirect:/users";
     }
