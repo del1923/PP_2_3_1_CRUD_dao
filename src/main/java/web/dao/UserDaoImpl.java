@@ -1,42 +1,41 @@
 package web.dao;
 
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import web.model.User;
 
-import java.util.ArrayList;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.List;
 
 @Component
 public class UserDaoImpl {
-    private List<User> usersList = new ArrayList<>();
-    private static int id;
 
-    {
-        usersList.add(new User(++id, "Tom", "Doo", 26, "tom@doo.com"));
-        usersList.add(new User(++id, "Jon", "Boo", 30, "jon@boo.com"));
+    @PersistenceContext
+    private EntityManager entityManager;
 
-    }
-
+    @Transactional( readOnly = true )
     public List<User> getUserList() {
-        return usersList;
+       return entityManager.createQuery( "SELECT users FROM User users", User.class ).getResultList();
     }
-
+    @Transactional()
     public void addUser ( User user) {
-        user.setId(++id);
-        usersList.add( user );
+            entityManager.persist( user );
     }
+    @Transactional ( readOnly = true )
     public User show ( int id ) {
-        return usersList.stream().filter(user -> user.getId() == id).findAny().orElse(null);
+        return entityManager.find( User.class, id );
     }
+    @Transactional
     public void update (int id, User user ) {
-        User updateUser = show( id );
-        updateUser.setName( user.getName() );
-        updateUser.setSurName( user.getSurName() );
-        updateUser.setAge( user.getAge() );
-        updateUser.seteMail( user.geteMail() );
+      User updateUser = entityManager.find( User.class, id );
+      updateUser.setName( user.getName() );
+      updateUser.setSurName( user.getSurName() );
+      updateUser.setAge( user.getAge() );
+      updateUser.seteMail( user.geteMail() );
     }
-
+    @Transactional
     public void delete ( int id ) {
-        usersList.removeIf( user -> user.getId() == id );
-    }
+        entityManager.remove( entityManager.find( User.class, id ) );
+   }
 }
