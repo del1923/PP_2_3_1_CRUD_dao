@@ -5,22 +5,24 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import web.dao.UserDaoImpl;
 import web.model.User;
+import web.service.UserServices;
 import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/users")
 public class UsersController {
 
-    private UserDaoImpl userDaoImpl;
+    private final UserServices userServices;
     @Autowired
-    public UsersController(UserDaoImpl userDaoImpl) {
-        this.userDaoImpl = userDaoImpl;
+    public UsersController(UserServices userServices) {
+        this.userServices = userServices;
     }
+
+
     @GetMapping
     public String usersList ( Model model ) {
-        model.addAttribute( "usersList", userDaoImpl.getUserList());
+        model.addAttribute( "usersList", userServices.getUserList());
         return "users/usersList";
     }
     @GetMapping("/newUser")
@@ -33,13 +35,13 @@ public class UsersController {
         if ( bindingResult.hasErrors() ) {
             return "/users/newUser";
         }
-        userDaoImpl.addUser( user );
+        userServices.addUser( user );
         return "redirect:users";
     }
 
     @GetMapping("/{id}/editUser")
     public String editUser( Model model, @PathVariable ("id") int id ) {
-        model.addAttribute( "user",userDaoImpl.show(id));
+        model.addAttribute( "user",userServices.show(id));
         return "users/editUser";
     }
     @PatchMapping("/{id}")
@@ -47,13 +49,13 @@ public class UsersController {
         if ( bindingResult.hasErrors() ) {
             return "/users/editUser";
         }
-        userDaoImpl.update( id , user );
+        userServices.update( id , user );
         return "redirect:/users";
     }
 
     @DeleteMapping("/{id}")
     public String deleteUser(@PathVariable ("id") int id ) {
-        userDaoImpl.delete(id);
+        userServices.delete(id);
         return "redirect:/users";
     }
 

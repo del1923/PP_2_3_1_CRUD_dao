@@ -1,7 +1,6 @@
 package web.dao;
 
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 import web.model.User;
 
 import javax.persistence.EntityManager;
@@ -9,33 +8,29 @@ import javax.persistence.PersistenceContext;
 import java.util.List;
 
 @Component
-public class UserDaoImpl {
+public class UserDaoImpl implements UserDao{
 
     @PersistenceContext
     private EntityManager entityManager;
 
-    @Transactional( readOnly = true )
+    @Override
     public List<User> getUserList() {
-       return entityManager.createQuery( "SELECT users FROM User users", User.class ).getResultList();
+        return entityManager.createQuery( "SELECT users FROM User users", User.class ).getResultList();
     }
-    @Transactional()
-    public void addUser ( User user) {
-            entityManager.persist( user );
+    @Override
+    public void addUser(User user) {
+        entityManager.persist( user );
     }
-    @Transactional ( readOnly = true )
+    @Override
     public User show ( int id ) {
         return entityManager.find( User.class, id );
     }
-    @Transactional
+    @Override
     public void update (int id, User user ) {
-      User updateUser = entityManager.find( User.class, id );
-      updateUser.setName( user.getName() );
-      updateUser.setSurName( user.getSurName() );
-      updateUser.setAge( user.getAge() );
-      updateUser.seteMail( user.geteMail() );
+        entityManager.merge( user );
     }
-    @Transactional
+    @Override
     public void delete ( int id ) {
         entityManager.remove( entityManager.find( User.class, id ) );
-   }
+    }
 }
