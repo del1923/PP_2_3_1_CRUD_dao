@@ -28,6 +28,7 @@ public class User {
     @Max(value = 100, message = "1...100")
     @Column( name = "age")
     private int age;
+
     @Email(message = "формат: abc@defg.hi")
     @NotEmpty( message = "Не пустое" )
     @Column( name = "email")
@@ -75,11 +76,11 @@ public class User {
         this.age = age;
     }
 
-    public String geteMail() {
+    public String getEMail() {
         return eMail;
     }
 
-    public void seteMail(String eMail) {
+    public void setEMail(String eMail) {
         this.eMail = eMail;
     }
 }

@@ -7,15 +7,20 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import web.model.User;
 import web.service.UserServices;
+import web.util.UserValidator;
+
 import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/users")
 public class UsersController {
 
+    private final UserValidator userValidator;
+
     private final UserServices userServices;
     @Autowired
-    public UsersController(UserServices userServices) {
+    public UsersController(UserValidator userValidator, UserServices userServices) {
+        this.userValidator = userValidator;
         this.userServices = userServices;
     }
 
@@ -32,6 +37,7 @@ public class UsersController {
 
     @PostMapping()
     public String addUser(@ModelAttribute("user") @Valid User user, BindingResult bindingResult ) {
+        userValidator.validate( user, bindingResult );
         if ( bindingResult.hasErrors() ) {
             return "/users/newUser";
         }
@@ -46,6 +52,7 @@ public class UsersController {
     }
     @PatchMapping("/{id}")
     public String updateUser( @ModelAttribute( "user" ) @Valid User user, BindingResult bindingResult, @PathVariable("id") int id ) {
+        userValidator.validate( user, bindingResult );
         if ( bindingResult.hasErrors() ) {
             return "/users/editUser";
         }
